@@ -1,0 +1,11 @@
+
+<h2>Your Cart</h2>
+<div *ngFor="let i of (cart.items$ | async)">
+  <div>
+    <strong>{{ i.product.name }}</strong>
+    — {{ i.product.price | currency:'PLN' }} ×
+    <input type="number" min="0" [max]="i.product.stockQty" [value]="i.qty"
+           (input)="cart.setQty(i.product.id, ($event.target as HTMLInputElement).valueAsNumber)">
+  </div>
+</div>
+<button (click)="cart.clear()">Clear cart</button>

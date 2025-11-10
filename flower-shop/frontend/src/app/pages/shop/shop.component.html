@@ -1,0 +1,36 @@
+
+<h2>Shop</h2>
+<form class="filters" (ngSubmit)="apply()" [formGroup]="filters">
+  <label>Search
+    <input formControlName="q" placeholder="e.g. rose" />
+  </label>
+  <label>Category
+    <select formControlName="category">
+      <option value="">All</option>
+      <option *ngFor="let c of (categories$ | async)" [value]="c.slug">{{ c.name }}</option>
+    </select>
+  </label>
+  <label>Sort
+    <select formControlName="sort">
+      <option value="">Default</option>
+      <option value="name">Name</option>
+      <option value="price_asc">Price: Low → High</option>
+      <option value="price_desc">Price: High → Low</option>
+    </select>
+  </label>
+  <button type="submit">Apply</button>
+</form>
+
+<div class="grid">
+  <div class="card" *ngFor="let p of (products$ | async)">
+    <img *ngIf="p.imageUrl" [src]="p.imageUrl" [alt]="p.name">
+    <h3>{{ p.name }}</h3>
+    <p class="muted">{{ p.categoryName }}</p>
+    <p>{{ p.description }}</p>
+    <div class="row">
+      <span><strong>{{ p.price | currency:'PLN' }}</strong></span>
+      <input type="number" min="1" [max]="p.stockQty" value="1" #qty>
+      <button (click)="add(p, qty)">Add to cart</button>
+    </div>
+  </div>
+</div>
