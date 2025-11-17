@@ -1,0 +1,74 @@
+<div class="shop-container">
+  <div class="container">
+    <h1>Our Products</h1>
+
+    <div class="filters">
+      <div class="search-box">
+        <input 
+          type="text" 
+          [(ngModel)]="searchTerm" 
+          (input)="onSearch()"
+          placeholder="Search products..."
+          class="search-input"
+        />
+      </div>
+
+      <div class="filter-group">
+        <label>Category:</label>
+        <select [(ngModel)]="selectedCategoryId" (change)="onCategoryChange()" class="filter-select">
+          <option [value]="undefined">All Categories</option>
+          <option *ngFor="let category of categories" [value]="category.id">
+            {{ category.name }}
+          </option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <label>Type:</label>
+        <select [(ngModel)]="selectedType" (change)="onTypeChange()" class="filter-select">
+          <option value="">All Types</option>
+          <option value="Flower">Flowers</option>
+          <option value="Bouquet">Bouquets</option>
+          <option value="Composition">Compositions</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="products-grid">
+      <div *ngFor="let product of filteredProducts" class="product-card">
+        <div class="product-image">
+          <img [src]="product.imageUrl || 'https://via.placeholder.com/300x300?text=Flower'" [alt]="product.name" />
+        </div>
+        <div class="product-info">
+          <h3>{{ product.name }}</h3>
+          <p class="product-description">{{ product.description }}</p>
+          <p class="product-category">{{ product.category?.name }} - {{ product.type }}</p>
+          <p class="product-price">${{ product.price.toFixed(2) }}</p>
+          <p class="product-stock">In Stock: {{ product.stockQuantity }}</p>
+          
+          <div class="product-actions">
+            <div class="quantity-controls" *ngIf="getQuantity(product) > 0">
+              <button (click)="updateQuantity(product, -1)" class="btn-qty">-</button>
+              <span class="quantity">{{ getQuantity(product) }}</span>
+              <button (click)="updateQuantity(product, 1)" class="btn-qty">+</button>
+            </div>
+            <button 
+              *ngIf="getQuantity(product) === 0"
+              (click)="addToCart(product)" 
+              class="btn btn-primary"
+              [disabled]="product.stockQuantity === 0"
+            >
+              Add to Cart
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="filteredProducts.length === 0" class="no-products">
+      <p>No products found. Try adjusting your filters.</p>
+    </div>
+  </div>
+</div>
+
+

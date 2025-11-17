@@ -1,0 +1,34 @@
+<nav class="navbar">
+  <div class="container">
+    <div class="nav-brand">
+      <a routerLink="/home" routerLinkActive="active">🌸 Flower Shop</a>
+    </div>
+    <ul class="nav-menu">
+      <li><a routerLink="/home" routerLinkActive="active">Home</a></li>
+      <li><a routerLink="/shop" routerLinkActive="active">Shop</a></li>
+      <li><a routerLink="/about" routerLinkActive="active">About Us</a></li>
+      <li><a routerLink="/contact" routerLinkActive="active">Contact</a></li>
+      <li><a routerLink="/forum" routerLinkActive="active">💬 Forum</a></li>
+      <li class="cart-link">
+        <a routerLink="/cart" routerLinkActive="active">
+          🛒 Cart
+          <ng-container *ngIf="(cartItemCount$ | async) as count">
+            <span class="cart-badge" *ngIf="count > 0">{{ count }}</span>
+          </ng-container>
+        </a>
+      </li>
+      <li><a routerLink="/admin" routerLinkActive="active">⚙️ Admin</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main>
+  <router-outlet></router-outlet>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <p>&copy; 2025 Flower Shop. All rights reserved.</p>
+  </div>
+</footer>
+

@@ -1,0 +1,100 @@
+<div class="forum-container">
+  <div class="container">
+    <h1>Forum</h1>
+    
+    <div class="forum-tabs">
+      <button 
+        *ngFor="let category of categories" 
+        [class.active]="activeCategory === category"
+        (click)="setActiveCategory(category)"
+        class="tab-button"
+      >
+        {{ categoryLabels[category] }}
+      </button>
+    </div>
+
+    <div class="forum-content">
+      <div *ngFor="let category of categories" 
+           [class.active]="activeCategory === category"
+           class="category-section">
+        
+        <div class="section-header">
+          <h2>{{ categoryLabels[category] }}</h2>
+          <button 
+            (click)="toggleAddForm(category)" 
+            class="btn btn-primary"
+            [class.active]="isAddFormVisible(category)"
+          >
+            {{ isAddFormVisible(category) ? 'Cancel' : '+ Add Question' }}
+          </button>
+        </div>
+
+        <div *ngIf="isAddFormVisible(category)" class="add-post-form">
+          <form (ngSubmit)="onSubmitPost(category)" class="post-form">
+            <ng-container *ngIf="newPostForms.get(category) as form">
+              <div class="form-group">
+                <label for="postTitle">Question Title *</label>
+                <input 
+                  type="text" 
+                  id="postTitle" 
+                  [(ngModel)]="form.title" 
+                  name="postTitle"
+                  required
+                  class="form-input"
+                  placeholder="Enter your question title"
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="postContent">Content (Optional)</label>
+                <textarea 
+                  id="postContent" 
+                  [(ngModel)]="form.content" 
+                  name="postContent"
+                  rows="4"
+                  class="form-input"
+                  placeholder="Add any additional details..."
+                ></textarea>
+              </div>
+            </ng-container>
+
+            <button 
+              type="submit" 
+              class="btn btn-primary"
+              [disabled]="isSubmitting(category)"
+            >
+              {{ isSubmitting(category) ? 'Posting...' : 'Post Question' }}
+            </button>
+
+            <div *ngIf="getMessage(category)" 
+                 class="submit-message" 
+                 [class.success]="getMessage(category).includes('successfully')">
+              {{ getMessage(category) }}
+            </div>
+          </form>
+        </div>
+
+        <div class="posts-list">
+          <div *ngIf="isLoading(category)" class="loading">
+            Loading posts...
+          </div>
+
+          <div *ngIf="!isLoading(category) && getPostsForCategory(category).length === 0" class="empty-posts">
+            <p>No questions yet. Be the first to post!</p>
+          </div>
+
+          <div *ngIf="!isLoading(category) && getPostsForCategory(category).length > 0" class="posts">
+            <div *ngFor="let post of getPostsForCategory(category)" class="post-item">
+              <div class="post-header">
+                <h3 class="post-title">{{ post.title }}</h3>
+                <span class="post-date">{{ formatDate(post.createdAt) }}</span>
+              </div>
+              <p *ngIf="post.content" class="post-content">{{ post.content }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

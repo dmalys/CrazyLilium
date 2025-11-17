@@ -1,0 +1,149 @@
+.shop-container {
+  padding: 2rem 0;
+
+  h1 {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: #333;
+  }
+
+  .filters {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    align-items: center;
+
+    .search-box {
+      flex: 1;
+      min-width: 200px;
+
+      .search-input {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 16px;
+      }
+    }
+
+    .filter-group {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+
+      label {
+        font-weight: bold;
+      }
+
+      .filter-select {
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 16px;
+      }
+    }
+  }
+
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2rem;
+  }
+
+  .product-card {
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    transition: transform 0.3s;
+
+    &:hover {
+      transform: translateY(-5px);
+    }
+
+    .product-image {
+      width: 100%;
+      height: 250px;
+      overflow: hidden;
+      background-color: #f5f5f5;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+
+    .product-info {
+      padding: 1.5rem;
+
+      h3 {
+        margin-bottom: 0.5rem;
+        color: #333;
+      }
+
+      .product-description {
+        color: #666;
+        font-size: 0.9rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .product-category {
+        color: #999;
+        font-size: 0.85rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .product-price {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #4CAF50;
+        margin-bottom: 0.5rem;
+      }
+
+      .product-stock {
+        font-size: 0.9rem;
+        color: #666;
+        margin-bottom: 1rem;
+      }
+
+      .product-actions {
+        .quantity-controls {
+          display: flex;
+          align-items: center;
+          gap: 1rem;
+          justify-content: center;
+
+          .btn-qty {
+            width: 30px;
+            height: 30px;
+            border: 1px solid #ddd;
+            background: white;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.2rem;
+
+            &:hover {
+              background: #f5f5f5;
+            }
+          }
+
+          .quantity {
+            font-weight: bold;
+            min-width: 30px;
+            text-align: center;
+          }
+        }
+      }
+    }
+  }
+
+  .no-products {
+    text-align: center;
+    padding: 3rem;
+    color: #666;
+  }
+}
+
+
